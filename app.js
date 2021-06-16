@@ -34,10 +34,10 @@ scene('main', () => {
   const PIPE_OPEN = 120;
   const PIPE_SPEED = 90;
 
-  // Pipes are 52x320
-
-  add([sprite('pipe'), pos(width() - 26, 256 + PIPE_OPEN), 'pipe']);
-  add([sprite('pipe'), pos(width() - 26, 256 - PIPE_OPEN), scale(1, -1), 'pipe']);
+  loop(1.8, () => {
+    add([sprite('pipe'), pos(width(), 256 + PIPE_OPEN), 'pipe']);
+    add([sprite('pipe'), pos(width(), 256 - PIPE_OPEN), scale(1, -1), 'pipe']);
+  });
 
   action('pipe', pipe => {
     pipe.move(-PIPE_SPEED, 0);
