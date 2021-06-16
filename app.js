@@ -1,7 +1,7 @@
 kaboom({
   global: true,
   width: 288,
-  height: 512,
+  height: 400,
 });
 
 loadSprite('birdy', 'img/birdy.png');
@@ -35,8 +35,11 @@ scene('main', () => {
   const PIPE_SPEED = 90;
 
   loop(1.8, () => {
-    add([sprite('pipe'), pos(width(), 256 + PIPE_OPEN), 'pipe']);
-    add([sprite('pipe'), pos(width(), 256 - PIPE_OPEN), scale(1, -1), 'pipe']);
+    const pipePos = rand(10, height() - PIPE_OPEN);
+
+    add([sprite('pipe'), origin('bot'), pos(width() + 30, pipePos), 'pipe']);
+
+    add([sprite('pipe'), pos(width() + 30, pipePos + PIPE_OPEN), scale(1, -1), origin('bot'), 'pipe']);
   });
 
   action('pipe', pipe => {
