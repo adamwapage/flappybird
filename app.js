@@ -21,14 +21,35 @@ scene('main', () => {
     birdy.jump(JUMP_FORCE);
   });
 
-  add([rect(width(), 12), pos(0, 280), origin('topleft'), solid()]);
+  birdy.action(() => {
+    if (birdy.pos.y >= height()) {
+      go('gameover');
+    }
+  });
+
+  birdy.collides('pipe', () => {
+    go('gameover');
+  });
 
   const PIPE_OPEN = 120;
+  const PIPE_SPEED = 90;
 
   // Pipes are 52x320
 
-  add([sprite('pipe'), pos(width() - 26, 256 + PIPE_OPEN)]);
-  add([sprite('pipe'), pos(width() - 26, 256 - PIPE_OPEN), scale(1, -1)]);
+  add([sprite('pipe'), pos(width() - 26, 256 + PIPE_OPEN), 'pipe']);
+  add([sprite('pipe'), pos(width() - 26, 256 - PIPE_OPEN), scale(1, -1), 'pipe']);
+
+  action('pipe', pipe => {
+    pipe.move(-PIPE_SPEED, 0);
+  });
+});
+
+scene('gameover', () => {
+  add([text('you lose!', 24), pos(width() / 2, height() / 2), origin('center')]);
+
+  keyPress('space', () => {
+    go('main');
+  });
 });
 
 start('main');
